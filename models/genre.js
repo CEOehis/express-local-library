@@ -7,7 +7,7 @@ var GenreSchema = new Schema({
 });
 
 // Virtual for genre's URL
-BookInstanceSchema
+GenreSchema
   .virtual('url')
   .get(function () {
     return '/catalog/genre/' + this._id;
