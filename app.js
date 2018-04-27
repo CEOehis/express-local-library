@@ -10,13 +10,7 @@ var catalog = require('./routes/catalog');
 
 var app = express();
 
-//Set up mongoose connection
-var mongoose = require('mongoose');
-var mongoDB = 'mongodb://localhost:27017/localLibraryDB';
-mongoose.connect(mongoDB);
-mongoose.Promise = global.Promise;
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+var db = require('./connection');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
