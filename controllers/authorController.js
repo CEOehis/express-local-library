@@ -144,8 +144,21 @@ exports.author_delete_post = function (req, res, next) {
 };
 
 // Display Author update form on GET.
-exports.author_update_get = function (req, res) {
-  res.send('NOT IMPLEMENTED: Author update GET');
+exports.author_update_get = function (req, res, next) {
+  async.parallel({
+    author: function(callback) {
+      Author.findById(req.params.id).exec(callback);
+    }
+  }, function(err, results) {
+    if(err) { return next(err); }
+    if(results.author == null) {
+      var err = new Error('No such author');
+      err.status = 404;
+      return next(err);
+    }
+    console.log(results);
+    res.render('author_form', { title: 'Update Author', author: results.author })
+  });
 };
 
 // Handle Author update on POST.
